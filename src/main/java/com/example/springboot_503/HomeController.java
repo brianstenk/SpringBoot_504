@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -21,6 +23,21 @@ public class HomeController {
         model.addAttribute("actors", actorRepository.findAll());
         return "list";
     }
+
+    @RequestMapping(value = "/actor/list", method = RequestMethod.GET)
+    public String listMovieActors(Model model){
+        Iterable<Actor> itr = actorRepository.findAll();
+        List<Actor> results = new ArrayList<>();
+        Actor actor = new Actor();
+        actor.setHeadshot("Some headshot");
+        actor.setId(1);
+        actor.setName("Some name");
+        actor.setRealname("Some real name");
+        results.add(actor);
+        model.addAttribute("actors",results);
+        return "list";
+    }
+
     @GetMapping("/add")
     public String newActor(Model model){
         model.addAttribute("actor", new Actor());
